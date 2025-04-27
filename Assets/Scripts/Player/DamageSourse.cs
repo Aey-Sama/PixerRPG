@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class DamageSourse : MonoBehaviour
 {
-    [SerializeField] private int damageAmount = 1;
+    private int damageAmount;
+
+    private void Start()
+    {
+        MonoBehaviour currentActiveWeapon = ActiveWeapon.Instance.currentActiveWeapon;
+        damageAmount = (currentActiveWeapon as IWeapon).GetWeaponInfo().weaponDamage;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<EnemyAI>())
-        {
-            EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-            enemyHealth?.TakeDamage(damageAmount);
-            Debug.Log("Aghhhh! Aghhhh!");
-        }
+        EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
+        enemyHealth?.TakeDamage(damageAmount);
     }
 }

@@ -12,6 +12,10 @@ public class EnemyHealth : MonoBehaviour
     private KnockBack knockback;
     private Flash flash;
 
+    private RoomController roomController;
+    public System.Action OnDeath;
+
+
     private void Awake()
     {
         flash = GetComponent<Flash>();
@@ -20,6 +24,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start() {
         currentHealth = startingHealth;
+
+         roomController = GetComponentInParent<RoomController>();
+        if (roomController != null)
+        {
+            roomController.RegisterEnemy(this.gameObject);
+        }
+
         
     }
 
@@ -40,7 +51,22 @@ public class EnemyHealth : MonoBehaviour
     public void DetectDeath() {
         if (currentHealth <= 0) {
             Instantiate(deathVFXPrefab,transform.position,Quaternion.identity);
+
+              if (roomController != null)
+            {
+                roomController.EnemyDied(this.gameObject);
+            }
+            OnDeath?.Invoke();
             Destroy(gameObject);
         }
     }
+
+    public void ManualRoomAssignment(RoomController room)
+    {
+        roomController = room;
+        roomController.RegisterEnemy(gameObject);
+    }
+
+
+    
 }

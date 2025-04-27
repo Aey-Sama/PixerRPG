@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ActiveWeapon : Singleton<ActiveWeapon>
@@ -6,6 +7,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     public MonoBehaviour currentActiveWeapon {get;private set;}
 
     private PlayerControles playerControls;
+    private float timeBetweenAttacks;
 
     private bool attackButtonDown, isAttacking = false;
 
@@ -26,6 +28,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
       playerControls.Combat.Attack.started += _ => StartAttacking();
       playerControls.Combat.Attack.canceled += _ => StopAttacking();
 
+      AttackCooldown();
+
     }
 
 
@@ -37,6 +41,9 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     {
         isAttacking = false; // Reset attack flag
         currentActiveWeapon = newWeapon;
+
+        AttackCooldown();
+        timeBetweenAttacks = (currentActiveWeapon as IWeapon).GetWeaponInfo().weaponCooldown;
 
         if (currentActiveWeapon is Sword sword)
         {
@@ -52,10 +59,19 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         currentActiveWeapon = null;
     }
 
-    public void ToggleIsAttacking(bool value){
-        isAttacking = value;
-
+  
+    public void AttackCooldown(){
+        isAttacking = true;
+        StopAllCoroutines();
+        StartCoroutine(TimeBetweenAttacksRoutine());
     }
+
+    private IEnumerator TimeBetweenAttacksRoutine()
+    {
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        isAttacking = false;
+    }
+
     private void StopAttacking()
     {
         attackButtonDown = false;
@@ -72,7 +88,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     {
         if (currentActiveWeapon is IWeapon weapon)
         {
-            isAttacking = true;
+            AttackCooldown();
             weapon.Attack();
 
         }

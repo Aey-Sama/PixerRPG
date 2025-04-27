@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - SpawnPoint
+  - Rooms
+  - StartPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -11,8 +15,8 @@ TagManager:
   - Camera
   - Water
   - UI
-  - 
-  - 
+  - NonDestroyable
+  - 'background '
   - 
   - 
   - 
@@ -38,8 +42,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BackGround
+    uniqueID: 2320108809
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3625295689
     locked: 0
   - name: Forground
     uniqueID: 2334740171

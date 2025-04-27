@@ -66,6 +66,8 @@ public class ActiveInventory : MonoBehaviour
         GameObject newWeapon = Instantiate(weaponToSpawn, ActiveWeapon.Instance.transform.position, Quaternion.identity, ActiveWeapon.Instance.transform);
         ActiveWeapon.Instance.NewWeapon(newWeapon.GetComponent<MonoBehaviour>());
 
+        ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0,0,0);
+
         Debug.Log("New weapon equipped: " + newWeapon.name);
     }
 

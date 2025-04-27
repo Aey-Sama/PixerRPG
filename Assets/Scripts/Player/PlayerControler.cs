@@ -22,6 +22,8 @@ public class PlayerControler : Singleton<PlayerControler>
     private Rigidbody2D rb;
     private Animator myAnimator;
     private SpriteRenderer mySpriteRenderer;
+    private KnockBack knockBack;
+    // private Flash flash;
     private float startingMoveSpeed;
 
 
@@ -34,30 +36,61 @@ public class PlayerControler : Singleton<PlayerControler>
 
     protected override void Awake()
     {
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         base.Awake();
-        
-        playerControles = new PlayerControles();
+        DontDestroyOnLoad(gameObject);
+
         rb = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         mySpriteRenderer = GetComponent<SpriteRenderer>();
-
-
+        knockBack = GetComponent<KnockBack>();
     }
+
     private void Start()
     {
-        playerControles.Combat.Dash.performed += _ => Dash();
+        // playerControles.Combat.Dash.performed += _ => Dash();
 
         startingMoveSpeed = moveSpeed;
 
     }
+    private void OnDestroy()
+    {
+        if (playerControles != null)
+        {
+            playerControles.Movement.Disable();
+            playerControles.Combat.Disable();
+            playerControles.Inventory.Disable();
+        }
+    }
+
+
 
     private void OnEnable()
     {
-        playerControles.Enable();
+        if (playerControles == null)
+            playerControles = new PlayerControles();
+
+        playerControles.Movement.Enable();
+        playerControles.Combat.Enable();
+        playerControles.Inventory.Enable();
+
+        playerControles.Combat.Dash.performed += _ => Dash(); // move here
     }
+
+
 
     private void Update() {
         PlayerInput();
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("🎮 Player Pos: " + transform.position);
+        }
     }
 
 
@@ -77,6 +110,7 @@ public class PlayerControler : Singleton<PlayerControler>
     }
     private void Move()
     {
+        if(knockBack.GettingKnockedBack){return;}
         rb.MovePosition(rb.position+movement*(moveSpeed*Time.fixedDeltaTime));
     }
 
@@ -120,4 +154,6 @@ public class PlayerControler : Singleton<PlayerControler>
         yield return new WaitForSeconds(dashCD);
         isDashing = false;
     }
+
+    
 }

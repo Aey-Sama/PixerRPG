@@ -11,6 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Narka.unity
     guid: adfa8af9d2799f68cbafc49d19abfd87
+  - enabled: 1
+    path: Assets/Scenes/Dungeon.unity
+    guid: d0eae4df271d70016b0b5dded9dbe52d
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: fe488468d0c279b04a47c5729e25c199
+  - enabled: 1
+    path: Assets/Scenes/Dungeon 1.unity
+    guid: f9e000f9fde274acbbc5eca7ed19d806
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0

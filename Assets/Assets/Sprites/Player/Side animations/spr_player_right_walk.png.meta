@@ -174,7 +174,7 @@ TextureImporter:
       name: spr_player_right_walk_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 63
         y: 0
         width: 64
         height: 64
@@ -240,7 +240,7 @@ TextureImporter:
       name: spr_player_right_walk_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 257
         y: 0
         width: 64
         height: 64

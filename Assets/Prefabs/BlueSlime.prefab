@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 6849152837573563059}
   m_Layer: 0
   m_Name: BlueSlime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dfbaea9e14860d44bd202447b6ca687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roamChangeDirFloat: 2
 --- !u!114 &971721484497205921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 3
   deathVFXPrefab: {fileID: 2747036158556694190, guid: 19c8ab26737d2234d991e371949be66f, type: 3}
+  knockBackThrust: 15
 --- !u!114 &-1876808598348783118
 MonoBehaviour:
   m_ObjectHideFlags: 0
